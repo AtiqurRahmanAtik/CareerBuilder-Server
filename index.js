@@ -67,7 +67,20 @@ async function run() {
     app.post('/applyJob', async(req, res) =>{
         const user = req.body;
         console.log(user);
-        const result = await applyJobCollectionDb.insertOne(user);
+        const query = await applyJobCollectionDb.insertOne(user);
+        const jobTitle = user.job_title;
+        const result = await applyJobCollectionDb.updateOne(
+            {job_title : jobTitle},
+            { $inc: {applicants_number: 1}
+        });
+        res.send(result);
+
+    })
+
+    //my job api
+    app.get('/myjobs/:email', async(req,res)=>{
+        
+        const result = await applyJobCollectionDb.find({email : req.params.email}).toArray();
         res.send(result);
 
     })
