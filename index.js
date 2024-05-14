@@ -78,6 +78,16 @@ async function run() {
     })
     
 
+    //all jobs page get api
+    app.get('/applyJob', async(req,res)=>{
+        
+        const query = applyJobCollectionDb.find();
+        const result = await query.toArray();
+        res.send(result)
+    })
+
+
+
     //my job api
     app.get('/myjobs/:email', async(req,res)=>{
         
@@ -122,16 +132,7 @@ async function run() {
     })
 
 
-    // app.patch('/myjob/:id', async(req, res)=>{
-    //     const id = req.params.id; 
-    //     const filter = {_id : new ObjectId(id)};
-    //     const options = { upsert: true };
-    //     const updateDoc = {
-    //         $set: {
-    //           plot: `A harvest of random numbers, such as: ${Math.random()}`
-    //         },
-    //       };
-    // })
+   
 
 
     // Send a ping to confirm a successful connection
