@@ -76,6 +76,7 @@ async function run() {
         res.send(result);
 
     })
+    
 
     //my job api
     app.get('/myjobs/:email', async(req,res)=>{
@@ -84,6 +85,53 @@ async function run() {
         res.send(result);
 
     })
+
+
+    //my job delete api
+    app.delete('/myjob/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id : new ObjectId(id)};
+        const result = await applyJobCollectionDb.deleteOne(query);
+        res.send(result);
+
+    })
+
+
+    //single job get and for update
+    app.get('/applyJob/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = { _id : new ObjectId(id)};
+        const result = await applyJobCollectionDb.findOne(query);
+        res.send(result)
+    })
+
+    ///single job put and for update
+    app.put('/applyJob/:id', async(req,res)=>{
+        const id = req.params.id;
+        const userData = req.body;
+        const filter = { _id : new ObjectId(id)};
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+             ...userData,
+            },
+          };
+
+        const result = await applyJobCollectionDb.updateOne(filter,updateDoc,options);
+        res.send(result)
+    })
+
+
+    // app.patch('/myjob/:id', async(req, res)=>{
+    //     const id = req.params.id; 
+    //     const filter = {_id : new ObjectId(id)};
+    //     const options = { upsert: true };
+    //     const updateDoc = {
+    //         $set: {
+    //           plot: `A harvest of random numbers, such as: ${Math.random()}`
+    //         },
+    //       };
+    // })
 
 
     // Send a ping to confirm a successful connection
