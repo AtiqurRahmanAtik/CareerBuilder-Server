@@ -86,6 +86,15 @@ async function run() {
         res.send(result)
     })
 
+    //sing jobs view page get api
+    app.get('/viewDetail/:id', async(req,res)=>{
+        
+        const id = req.params.id;
+        const query ={_id : new ObjectId(id) };
+        const result = await CareerBuilderDb.findOne(query);
+        res.send(result);
+    })
+
 
 
     //my job api
