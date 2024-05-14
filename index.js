@@ -124,6 +124,20 @@ async function run() {
         res.send(result)
     })
 
+    //Single Job details route Apply Button post api
+    app.post('/singleJob', async(req, res) =>{
+        const user = req.body;
+        console.log(user);
+        const query = await applyJobCollectionDb.insertOne(user);
+        const jobTitle = user.job_title;
+        const result = await applyJobCollectionDb.updateOne(
+            {job_title : jobTitle},
+            { $inc: {applicants_number: 1}
+        });
+        res.send(result);
+
+    })
+
     ///single job put and for update
     app.put('/applyJob/:id', async(req,res)=>{
         const id = req.params.id;
