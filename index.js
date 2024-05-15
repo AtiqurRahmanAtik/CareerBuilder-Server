@@ -54,6 +54,13 @@ async function run() {
         res.send(result);
     })
 
+    //get api for banner
+    app.get('/bannerJob', async(req,res) =>{
+        const cursor = CareerBuilderDb.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
     //job view details single
     app.get('/job/:id', async(req,res)=>{
         const id = req.params.id;
