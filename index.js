@@ -101,6 +101,7 @@ async function run() {
         const result = await CareerBuilderDb.findOne(query);
         res.send(result);
     })
+   
 
 
 
@@ -144,6 +145,25 @@ async function run() {
         res.send(result);
 
     })
+
+
+    //Applied Job  route get  api show all data 
+    app.get('/singleJob/:email', async(req, res) =>{
+
+        const result = await applyJobCollectionDb.find({email : req.params.email}).toArray();
+        res.send(result);
+
+    })
+
+       //download job get and for update
+       app.get('/download/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = { _id : new ObjectId(id)};
+        const result = await applyJobCollectionDb.findOne(query);
+        res.send(result)
+    })
+
+
 
     ///single job put and for update
     app.put('/applyJob/:id', async(req,res)=>{
